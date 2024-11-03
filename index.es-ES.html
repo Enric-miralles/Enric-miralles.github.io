@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es-ES">
+<head>
+    <title>Prueba Dislexia</title>
+    <meta charset="utf-8">
+    <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>-->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    
+<body>
+
+    <nav class="navbar sticky-top bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Prueba Dislexia</a>
+            <button type="button" class="btn btn-link" onclick="ToogleTransformText();">Activar/desactivar</button>
+            <div class="d-flex">
+                <a href="index.html" class="me-1"><img src="img/ca.png" alt="Català"></a>
+                <a href="index.es-ES.html"><img src="img/es.png" alt="castellano"></a>
+            </div>
+        </div>
+      </nav>
+
+    <div id="textoGirar" class="container-fluid p-5 display-6">
+
+        <p>Esta página es un experimento para tratar de explicar que es la dislexia, y qué problemas conlleva a quienes la sufren.</p>
+        <p>Muchos asociamos la dislexia simplemente a girar números y letras, o a desordenar letras de una palabra.</p>
+        <p>Yo no se explicar en que consiste y cada caso será diferente, pero en algunas fases del aprendizaje hace que la lectura sea extremadamente lenta.</p>
+        <p>Este es el propósito de que esta página: <span style="font-weight: bold">Hacer que las personas no disléxicas tengamos que hacer el esfuerzo adicional de ordenar la lectura y pensar si alguna letra la interpretamos ninguneada.</span></p>
+        <p style="font-weight: bold; text-decoration: underline">En ningún caso pretende representar o simular cómo ve o lee realmente a una persona con dislexia. Sólo pretende igualar la velocidad de lectura y simular la dificultad de comprensión.</p>
+        <p>Mi hijo sufre dislexia, y yo inicialmente pensaba que no se esfuerza o concentra lo suficiente, e interpretaba a los "despistes" como una falta de interés en la actividad. No fue hasta que vi un ejemplo similar a este que entendí el esfuerzo adicional que tiene que hacer al leer, y el que cansa mentalmente el esfuerzo continuado y la necesidad de descanso más frecuente.</p>
+        <p>Ahora imagine pasar toda una jornada con este nivel de esfuerzo y concentración adicional para solo leer. O que esto en lugar de un simple texto de un padre preocupado sea un enunciado de un problema o un examen. El esfuerzo y tiempo invertido en entender el enunciado son una penalización y una desventaja. Probablemente en una lectura normal ya hace rato que hubiera terminado esta lectura y estaríais contestando las preguntas.</p>
+        <p>Ahora, imagine además que se trata de una lectura en una lengua extranjera nueva que estamos aprendiendo:</p>
+        <p>Pensez-vous que ce texte est facile à comprendre pour quelqu’un qui a envie de lire cette page?<br>Und dieser andere Text?</p>
+        <p>A mí una experiencia de lectura como esta me hace reflexionar , y creo que sería beneficioso para los alumnos con dislexia que el resto de compañeros tuvieran una experiencia de lectura similar a la de los disléxicos. De esta manera tengo la esperanza de que la percepción de los compañeros de inferioridad para los que necesitan ayuda cambie al entender las dificultades adicionales a las que estos se enfrentan.</p>
+        <p>Si lo consideráis oportuno, me ofrezco a adaptar este texto con contenido más breve y adecuado para la lectura y comprensión de la nada de los alumnos, y os empecé a usarlo libremente dentro y fuera del aula con el fin de sensibilizar y dar a conocer la problemática de la dislexia.</p>
+        <p>Gracias a la atención, comprensión y el esfuerzo dedicado en la lectura.</p>
+    </div>
+
+    
+
+
+
+    <script type="text/javascript">
+
+
+
+        function messUpWord(word) {
+            if (word.length < 3)
+
+        {
+            return word;
+        }
+
+        return word[0] + messUpMessyPart(word.slice(1, -1)) + word[word.length - 1];
+        }
+
+        function messUpMessyPart(messyPart) {
+            if (messyPart.length < 2)
+
+        {
+            return messyPart;
+        }
+
+        var a, b;
+        while (!(a < b)) {
+            a = getRandomInt(0, messyPart.length - 1);
+            b = getRandomInt(0, messyPart.length - 1);
+        }
+
+        return messyPart.slice(0, a) + messyPart[b] + messyPart.slice(a + 1, b) + messyPart[a] + messyPart.slice(b + 1);
+        }
+
+        // From https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1) + min);
+        }
+
+        var textoOriginal = document.getElementById("textoGirar").innerHTML
+        .replace('\\r', ' ').replace('\\n', ' ').replace('<', ' <').replace('>', '> ');
+
+
+        var tratandoTag = false;
+        var activarDisplexia = true
+
+        function ToogleTransformText()
+        {
+            activarDisplexia = !activarDisplexia;
+            transformarTexto();
+        }
+
+
+
+        function transformarTexto() {
+            var elemento = document.getElementById("textoGirar");
+            //var contenido = elemento.innerHTML;
+            
+            if(activarDisplexia)
+            {
+                var array = textoOriginal.split(" ");
+                var contenidoModificado = "";
+                array.forEach(function (palabra) {
+
+                    palabra = palabra.trim();
+                    //console.log('Trato palabra ' + palabra);
+
+                    if (palabra != "") {
+
+                        if ((palabra.indexOf('<') < 0) && !tratandoTag ) {
+                            var palabraModificada = messUpWord(palabra);
+                            palabraModificada = InvertirLetras(palabraModificada);
+                            contenidoModificado = contenidoModificado + " " + palabraModificada;
+                        }
+                        else {
+
+                            contenidoModificado = contenidoModificado + " " + palabra;
+
+
+                            if (palabra.indexOf('<') >= 0) {
+                                tratandoTag = true;
+                            }
+
+                            if (palabra.indexOf('>') >= 0)
+                            {
+                                tratandoTag = false;
+                            }
+
+                        }
+                    }
+                });
+
+                elemento.innerHTML = contenidoModificado;
+            }
+            else{
+                elemento.innerHTML = textoOriginal;
+            }
+
+            
+        }
+
+
+        function InvertirLetras(str) {
+            var palabraModificada = "";
+            for (let i = 0; i < str.length; i++)
+
+        {
+            if (getRandomInt(1, 10) > 5 )
+
+        {
+            if (str.charAt(i) == 'b')
+
+        {
+            palabraModificada = palabraModificada + 'd';
+        }
+
+        else if (str.charAt(i) == 'd') {
+            palabraModificada = palabraModificada + 'b';
+        }
+
+        else if (str.charAt(i) == 'B') {
+            palabraModificada = palabraModificada + 'D';
+        }
+
+        else if (str.charAt(i) == 'D') {
+            palabraModificada = palabraModificada + 'B';
+        }
+
+        //else if (str.charAt(i) == 'p') {
+        //    palabraModificada = palabraModificada + 'b';
+        //}
+
+        //else if (str.charAt(i) == 'f') {
+        //    palabraModificada = palabraModificada + 'l';
+        //}
+
+        //else if (str.charAt(i) == 'l') {
+        //    palabraModificada = palabraModificada + 'f';
+        //}
+
+        else {
+            palabraModificada = palabraModificada + str.charAt(i);
+        }
+
+        }
+
+        else {
+            palabraModificada = palabraModificada + str.charAt(i);
+        }
+
+        }
+
+
+        return palabraModificada;
+        }
+
+        transformarTexto();
+        setInterval(transformarTexto, 1000);
+
+
+
+    </script>
+
+
+
+
+</body>
+
+</html>
