@@ -45,7 +45,7 @@
 
 
         function messUpWord(word) {
-            if (word.length < 3)
+            if (word.length < 2)
 
         {
             return word;
@@ -76,7 +76,7 @@
         }
 
         var textoOriginal = document.getElementById("textoGirar").innerHTML
-        .replace('\\r', ' ').replace('\\n', ' ').replace('<', ' <').replace('>', '> ');
+        .replace('\\r', ' ').replace('\\n', ' ').replace('<', ' <').replace('>', '> ').replace('.', ' .').replace(',', ' ,');
 
 
         var tratandoTag = false;
@@ -128,7 +128,7 @@
                     }
                 });
 
-                elemento.innerHTML = contenidoModificado;
+                elemento.innerHTML = contenidoModificado.replace(' .', '.').replace(' ,', ',');
             }
             else{
                 elemento.innerHTML = textoOriginal;
